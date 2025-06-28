@@ -1,8 +1,9 @@
 import NotFoundPage from "@/app/not-found";
-import {products} from "@/app/products/product-data"
 
-export default function ProductDetailPage({params}: {params: {id:string}}) {
-    const product = products.find(p => p.id === params.id)
+export default async function ProductDetailPage({params}: {params: {id:string}}) {
+
+    const response = await fetch('http://127.0.0.1:3000/api/products/' + params.id);
+    const product = response.json();
 
     if (!product) {
         return <NotFoundPage/>
