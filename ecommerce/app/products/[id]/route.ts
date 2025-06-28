@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { connectToDb} from '@/app/api/db';
+import { connectToDb } from '@/app/api/db';
 
 type Params = {
     id: string;

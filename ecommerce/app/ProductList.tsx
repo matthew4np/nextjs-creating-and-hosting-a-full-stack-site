@@ -40,7 +40,7 @@ async function addToCart(productId: string) {
             </div>
             <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
             <p className="text-gray-600">${product.price}</p>
-            <button onclick={() => addToCart(product.id)}>Add to Cart</button>
+            <button onClick={() => addToCart(product.id)}>Add to Cart</button>
         </Link>
         ))}
         </div>
