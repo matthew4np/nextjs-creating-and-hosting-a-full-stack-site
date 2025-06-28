@@ -1,8 +1,8 @@
 
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { MongoClient, Db, ServerApiVersion } from 'mongodb';
 
 let cachedClient: MongoClient | null  = null;
-let cachedDb: unknown | null = null;
+let cachedDb: Db | null = null;
 
 const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.j39co6v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -23,7 +23,7 @@ serverApi: {
 await client.connect();
 
 cachedClient = client;
-cachedDb = client.db();
+cachedDb = client.db('ecommerce-nextjs');
 
 return { client, db: client.db() }
 
