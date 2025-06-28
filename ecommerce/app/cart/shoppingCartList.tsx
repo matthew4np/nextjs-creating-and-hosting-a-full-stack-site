@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { Product } from "../products/product-data";
+import { Product } from "../product-data";
 import Link from 'next/link'
 
 export default function ShoppingCartList({ initialCartProducts } : {initialCartProducts: Product[] }) {

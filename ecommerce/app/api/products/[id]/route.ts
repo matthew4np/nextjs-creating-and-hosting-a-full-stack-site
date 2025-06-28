@@ -1,5 +1,5 @@
 import {NextRequest} from 'next/server';
-import {products} from '@/app/products/product-data';
+import {products} from '@/app/product-data';
 
 type Params = {
     id: string;
