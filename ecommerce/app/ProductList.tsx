@@ -5,9 +5,10 @@ import Image from 'next/image';
 import { Product } from './product-data';
 import Link from 'next/link';
 
-export default function ProductList({ products, initialCartProducts } : { products: Product[], initialCartProducts: Product[]}) {
 
-const [cartProducts, setCartProduct] = useState(initialCartProducts)
+export default function ProductList({ products, initialCartProducts = [] } : { products: Product[], initialCartProducts: Product[]}) {
+
+const [cartProducts, setCartProducts] = useState(initialCartProducts)
 
 async function addToCart(productId: string) {
     const response = await fetch('http://127.0.0.1:3000/api/users/2/cart', {
@@ -21,8 +22,28 @@ async function addToCart(productId: string) {
     })
 
     const updatedCartProducts = await response.json();
-    setCartProduct(updatedCartProducts);
+    setCartProducts(updatedCartProducts);
 
+}
+
+async function removeFromCart(productId: string) {
+    const response = await fetch('http://127.0.0.1:3000/api/users/2/cart', {
+        method: 'DELETE', 
+        body: JSON.stringify({
+            productId,
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    const updatedCartProducts = await response.json();
+    setCartProducts(updatedCartProducts);
+
+}
+
+function productIsInCart(productId: string) {
+    return cartProducts.some(cp => cp.id === productId);
 }
 
     return (
@@ -40,9 +61,27 @@ async function addToCart(productId: string) {
             </div>
             <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
             <p className="text-gray-600">${product.price}</p>
-            <button onClick={() => addToCart(product.id)}>Add to Cart</button>
+            {
+                productIsInCart(product.id)
+                ? (
+                    <button onClick={(e) => {
+                    e.preventDefault();
+                    removeFromCart(product.id);
+                    }}>Remove from Cart</button>
+
+                ) : (
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        addToCart(product.id);
+                    }}>Add to Cart</button>
+                )
+            }
+
         </Link>
         ))}
         </div>
     )
 }
+
+
+
