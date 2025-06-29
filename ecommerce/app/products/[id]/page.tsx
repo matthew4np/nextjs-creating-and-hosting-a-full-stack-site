@@ -2,7 +2,7 @@ import NotFoundPage from "@/app/not-found";
 
 export default async function ProductDetailPage({params}: {params: { id:string }}) {
 
-    const response = await fetch('http://127.0.0.1:3000/products/' + params.id);
+    const response = await fetch('http://127.0.0.1:3000/api/products/' + params.id);
     const product = await response.json();
 
     if (!product) {
