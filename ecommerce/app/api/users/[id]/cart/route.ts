@@ -73,17 +73,38 @@ return new Response(JSON.stringify(cartProducts), {
 }
 
 export async function DELETE(request: NextRequest, {params}: {params: Params}) {
+    const { db } = await connectToDb();
+
     const userId = params.id;
     const body = await request.json();
     const productId = body.productId;
 
-    carts[userId] = carts[userId] ? carts[userId].filter(pid => pid !== productId) : [] ;
+    const updatedCart = await db.collection('carts').findOneAndUpdate(
+        { userId },
+        { $pull: { cartIds: productId }},
+        { returnDocument: 'after'}
+    );
 
-    return new Response(JSON.stringify(carts[userId]), {
+    if (!updatedCart) {
+
+        return new Response(JSON.stringify([]), {
         status: 202,
         headers: {
             'Content-Type' : 'application/json',
         }
     })
+
+    }
+
+    const cartProducts = await db.collection('products').find({id: { $in: updatedCart.cartIds}}).toArray();
+
+    return new Response(JSON.stringify(cartProducts), {
+    status: 202,
+    headers: {
+
+    'Content-Type' : 'application/json',
+    }
+    })
+    
 }
 

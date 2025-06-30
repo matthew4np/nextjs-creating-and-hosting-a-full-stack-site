@@ -12,10 +12,12 @@ export default function ShoppingCartList({ initialCartProducts } : {initialCartP
     <>
     <h1>Shopping Cart</h1>
     {cartProducts.map(product => (
+        <div className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300">
         <Link key={product.id} href={"/products/" + product.id}>
-            <h3>{product.name}</h3>
-            <p>${product.price}</p>
+            <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+            <p className="text-2xl text-gray-600">${product.price}</p>
         </Link>
+        </div>
     ))}
     </>
     )
