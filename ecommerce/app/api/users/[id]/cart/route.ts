@@ -1,14 +1,8 @@
 import { NextRequest } from 'next/server';
-import { products } from '@/app/product-data';
 import { connectToDb } from '@/app/api/db';
 
 type ShoppingCart = Record<string, string[]>;
 
-const carts: ShoppingCart = {
-    '1': ['123', '345'],
-    '2': ['345', '456'],
-    '3': ['234'],
-}
 
 type Params = {
     id: string;
@@ -44,7 +38,7 @@ const cartProducts = await db.collection('products').find({id: { $in: cartIds}})
 }
 
 type CartBody = {
-    productId: string;
+    productId: string,
 }
 
 export async function POST(request: NextRequest, {params}: {params: Params}) {
