@@ -27,7 +27,7 @@ async function addToCart(productId: string) {
 }
 
 async function removeFromCart(productId: string) {
-    const response = await fetch('https://solid-happiness-x5r7xwrg6vjxh6p77-3000.app.github.dev//api/users/2/cart', {
+    const response = await fetch('https://solid-happiness-x5r7xwrg6vjxh6p77-3000.app.github.dev/api/users/2/cart', {
         method: 'DELETE', 
         body: JSON.stringify({
             productId,
