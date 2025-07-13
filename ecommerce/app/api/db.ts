@@ -10,7 +10,7 @@ if (cachedClient && cachedDb) {
     return { client: cachedClient, db: cachedDb};
 }
 
-const uri = `mongodb+srv://dbAdmin1:AbbreviatioN@cluster0.j39co6v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+  const uri = `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_HOST}/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
 serverApi: {
