@@ -26,7 +26,7 @@ async function addToListUsers(userId: string) {
 }
 
 async function removeFromListUsers(userId: string) {
-    const response = await fetch('http://localhost:3000/api/users', {
+    const response = await fetch('http://localhost:3000/api/users/:userId', {
         method: 'DELETE', 
         body: JSON.stringify({
             userId,
