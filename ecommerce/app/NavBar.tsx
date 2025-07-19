@@ -14,6 +14,10 @@ export default function NavBar() {
                     <li>
                         <Link href="/checkout" className="text-gray-700 hover:text-black">Check Out</Link>
                     </li>
+                    <li>
+                        <Link href="/users" className="text-gray-700 hover:text-black">Users</Link>
+                    </li>
+
                 </ul>
             </div>
         </nav>
