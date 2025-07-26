@@ -22,7 +22,7 @@ export default function RegisterPage() {
 
     try {
       // Use the standard collection endpoint for creating a new user
-      const response = await fetch('/api/users', {
+      const response = await fetch('/api/users/user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
