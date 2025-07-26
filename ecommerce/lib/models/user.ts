@@ -9,6 +9,7 @@ export const UserSchema = z.object({
   // Add more password constraints as needed, e.g., .min(8)
   password: z.string().min(1, { message: 'Password is required' }),
   // You can add other fields here and mark them as optional if needed
+  cartIds: z.array(z.string()).optional(),
   // e.g., address: z.string().optional()
 });
 
