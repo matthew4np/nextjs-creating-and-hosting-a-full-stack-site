@@ -5,7 +5,6 @@ export const dynamic = "force-dynamic";
 
 export default async function CartPage() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
   // When fetching from a Server Component, we need to manually forward the cookies.
   // The middleware ensures the user is logged in, but the API call still needs the token.
   const cookieStore = cookies();
@@ -13,7 +12,6 @@ export default async function CartPage() {
   if (cookieStore.has("token")) {
     requestHeaders.set("Cookie", `token=${cookieStore.get("token")?.value}`);
   }
-
   const response = await fetch(`${apiUrl}/api/cart`, {
     cache: "no-cache",
     headers: requestHeaders,

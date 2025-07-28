@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { Product } from './product-data';
 import Link from 'next/link';
 
-
 export default function ProductList({ products, initialCartProducts = [] }: { products: Product[], initialCartProducts: Product[] }) {
     const router = useRouter();
   
@@ -76,6 +75,7 @@ export default function ProductList({ products, initialCartProducts = [] }: { pr
             {/* This link wraps the clickable parts of the card that lead to the product page */}
             <Link href={`/products/${product.id}`} className="group flex-grow">
               <div className="flex justify-center mb-4 h-48 relative">
+
                 <Image
                   src={'/' + product.imageUrl}
                   alt="Product image"

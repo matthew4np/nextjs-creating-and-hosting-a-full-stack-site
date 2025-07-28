@@ -38,7 +38,7 @@ export default async function Products() {
   // This logic now handles both logged-out users (who get an empty array from cartPromise)
   // and potential API errors for logged-in users, preventing crashes.
   const cartProducts = Array.isArray(cartData) ? cartData : [];
-
+  
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-4xl font-bold mb-8">
