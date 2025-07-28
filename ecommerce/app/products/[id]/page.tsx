@@ -8,7 +8,6 @@ export default async function ProductDetailPage({
   params: { id: string };
 }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
   const response = await fetch(`${apiUrl}/api/products/` + params.id);
   const product = await response.json();
 
