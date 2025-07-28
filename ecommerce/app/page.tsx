@@ -1,101 +1,54 @@
-import Image from "next/image";
+import Link from 'next/link';
+import Image from 'next/image';
+import { Product } from './product-data';
 
-export default function Home() {
+// By making the Home page an `async` function, it becomes a Server Component,
+// which is perfect for fetching data.
+export default async function Home() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  // In a real application, you might have a specific API endpoint for featured products.
+  // For now, we'll fetch all products and take the first 4 to feature.
+  let featuredProducts: Product[] = [];
+  try {
+    // We add a query parameter to limit the results on the API side if it supports it.
+    const response = await fetch(`${apiUrl}/api/products?limit=4`, {
+      // Cache the data for an hour to improve performance for all visitors.
+      next: { revalidate: 3600 },
+    });
+    if (response.ok) {
+      featuredProducts = await response.json();
+    }
+  } catch (error) {
+    console.error("Failed to fetch featured products:", error);
+    // In a real app, you might render a specific error state here.
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={138} //180
-          height={38} //38
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly. I just did.</li>
-        </ol>
+    <div className="bg-white text-gray-800">
+      {/* Hero Section */}
+      <section className="text-center py-20 bg-gray-50">
+        <h1 className="text-5xl font-bold mb-4">Welcome to MyStore</h1>
+        <p className="text-xl text-gray-600 mb-8">Your one-stop shop for amazing products.</p>
+        <Link href="/products" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors">
+          Shop Now
+        </Link>
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Featured Products Section */}
+      <section className="container mx-auto py-16">
+        <h2 className="text-4xl font-bold text-center mb-12">Featured Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
+          {featuredProducts.map((product) => (
+            <div key={product.id} className="border rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+              <Link href={`/products/${product.id}`} className="group block">
+                <div className="relative h-64 w-full"><Image src={'/' + product.imageUrl} alt={product.name} fill style={{ objectFit: 'cover' }} /></div>
+                <div className="p-4"><h3 className="text-lg font-semibold mb-2 group-hover:underline">{product.name}</h3><p className="text-gray-700 font-bold">${product.price.toFixed(2)}</p></div>
+              </Link>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
     </div>
   );
 }
