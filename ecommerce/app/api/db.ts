@@ -13,12 +13,15 @@ if (cachedClient && cachedDb) {
   
   const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_HOST}/?retryWrites=true&w=majority&appName=Cluster0`;
 
+  console.log(uri);
+
 const client = new MongoClient(uri, {
 serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
 }
+
 });
 
 await client.connect();
