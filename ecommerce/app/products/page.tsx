@@ -15,8 +15,6 @@ export default async function Products() {
   const cookieStore = cookies();
   const hasToken = cookieStore.has("token");
 
-  console.log(apiUrl);
-
   // Fetch all products (this is a public request)
   const productsPromise = fetch(`${apiUrl}/api/products`).then((res) =>
     res.json()
